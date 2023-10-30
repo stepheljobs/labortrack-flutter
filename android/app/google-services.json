@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1087517359140",
+    "project_id": "labortrack-3cd62",
+    "storage_bucket": "labortrack-3cd62.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087517359140:android:43a5aacf77d992aa606cb1",
+        "android_client_info": {
+          "package_name": "com.primetop.labortrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdgtkFEFeHIqfOA15dPwyz2X-GMgYqy2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
