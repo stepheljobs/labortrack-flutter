@@ -31,6 +31,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     _model.emailFocusNode ??= FocusNode();
     _model.passwordController ??= TextEditingController();
     _model.passwordFocusNode ??= FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -387,7 +388,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 12.0),
+                          EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 4.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -437,6 +438,25 @@ class _LoginWidgetState extends State<LoginWidget> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            'v1.0.0 - 21',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Urbanist',
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
                           ),
                         ],
                       ),

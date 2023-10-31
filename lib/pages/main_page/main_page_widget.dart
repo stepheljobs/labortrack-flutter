@@ -33,6 +33,8 @@ class _MainPageWidgetState extends State<MainPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => MainPageModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -74,7 +76,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                   height: 50.0,
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      FlutterFlowTheme.of(context).secondary,
+                      FlutterFlowTheme.of(context).primary,
                     ),
                   ),
                 ),
@@ -249,30 +251,20 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                     ? valueOrDefault(
                                         currentUserDocument?.companyId, '')
                                     : null,
-                                isNull: (valueOrDefault(
-                                                currentUserDocument?.companyId,
-                                                '') !=
-                                            ''
-                                        ? valueOrDefault(
-                                            currentUserDocument?.companyId, '')
-                                        : null) ==
-                                    null,
                               )
                               .where(
                                 'date',
-                                isEqualTo: dateTimeFormat(
-                                            'yMMMd', _model.datePicked) !=
-                                        ''
-                                    ? dateTimeFormat('yMMMd', _model.datePicked)
+                                isEqualTo: FFAppState().filteredDate != ''
+                                    ? FFAppState().filteredDate
                                     : null,
-                                isNull: (dateTimeFormat(
-                                                'yMMMd', _model.datePicked) !=
-                                            ''
-                                        ? dateTimeFormat(
-                                            'yMMMd', _model.datePicked)
-                                        : null) ==
-                                    null,
-                              ),
+                              )
+                              .where(
+                                'project_name',
+                                isEqualTo: _model.filterProjectValue != ''
+                                    ? _model.filterProjectValue
+                                    : null,
+                              )
+                              .orderBy('created_time', descending: true),
                         ),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
@@ -283,7 +275,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                 height: 50.0,
                                 child: CircularProgressIndicator(
                                   valueColor: AlwaysStoppedAnimation<Color>(
-                                    FlutterFlowTheme.of(context).secondary,
+                                    FlutterFlowTheme.of(context).primary,
                                   ),
                                 ),
                               ),

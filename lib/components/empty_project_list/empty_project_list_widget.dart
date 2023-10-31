@@ -27,6 +27,8 @@ class _EmptyProjectListWidgetState extends State<EmptyProjectListWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EmptyProjectListModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

@@ -35,6 +35,7 @@ class _AddChatUsersWidgetState extends State<AddChatUsersWidget> {
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -187,7 +188,7 @@ class _AddChatUsersWidgetState extends State<AddChatUsersWidget> {
                       height: 50.0,
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          FlutterFlowTheme.of(context).secondary,
+                          FlutterFlowTheme.of(context).primary,
                         ),
                       ),
                     ),

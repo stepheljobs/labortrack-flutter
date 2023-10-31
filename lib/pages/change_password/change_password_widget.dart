@@ -28,6 +28,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
 
     _model.phoneNumberController ??= TextEditingController();
     _model.phoneNumberFocusNode ??= FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

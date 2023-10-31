@@ -42,6 +42,7 @@ class _PostPictureWidgetState extends State<PostPictureWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       final selectedMedia = await selectMedia(
+        imageQuality: 50,
         includeBlurHash: true,
         multiImage: false,
       );
@@ -92,6 +93,7 @@ class _PostPictureWidgetState extends State<PostPictureWidget> {
     _model.currentDateFocusNode ??= FocusNode();
     _model.noteTextfieldController ??= TextEditingController();
     _model.noteTextfieldFocusNode ??= FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -122,7 +124,7 @@ class _PostPictureWidgetState extends State<PostPictureWidget> {
             height: 50.0,
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(
-                FlutterFlowTheme.of(context).secondary,
+                FlutterFlowTheme.of(context).primary,
               ),
             ),
           ),
@@ -149,7 +151,7 @@ class _PostPictureWidgetState extends State<PostPictureWidget> {
                   height: 50.0,
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      FlutterFlowTheme.of(context).secondary,
+                      FlutterFlowTheme.of(context).primary,
                     ),
                   ),
                 ),
@@ -415,7 +417,7 @@ class _PostPictureWidgetState extends State<PostPictureWidget> {
                                                                       Color>(
                                                                 FlutterFlowTheme.of(
                                                                         context)
-                                                                    .secondary,
+                                                                    .primary,
                                                               ),
                                                             ),
                                                           ),

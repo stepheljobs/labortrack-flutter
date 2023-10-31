@@ -37,6 +37,7 @@ class _EditUserProfileWidgetState extends State<EditUserProfileWidget> {
     _model.companyCodeFocusNode ??= FocusNode();
 
     _model.yourEmailFocusNode ??= FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -65,14 +66,14 @@ class _EditUserProfileWidgetState extends State<EditUserProfileWidget> {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             body: Center(
               child: SizedBox(
                 width: 50.0,
                 height: 50.0,
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(
-                    FlutterFlowTheme.of(context).secondary,
+                    FlutterFlowTheme.of(context).primary,
                   ),
                 ),
               ),
@@ -82,7 +83,7 @@ class _EditUserProfileWidgetState extends State<EditUserProfileWidget> {
         final editUserProfileUsersRecord = snapshot.data!;
         return Scaffold(
           key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primary,
             automaticallyImplyLeading: false,

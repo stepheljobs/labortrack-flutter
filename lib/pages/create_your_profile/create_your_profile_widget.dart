@@ -39,6 +39,7 @@ class _CreateYourProfileWidgetState extends State<CreateYourProfileWidget> {
     _model.phoneNumberFocusNode ??= FocusNode();
     _model.companyCodeController ??= TextEditingController();
     _model.companyCodeFocusNode ??= FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

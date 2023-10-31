@@ -27,6 +27,8 @@ class _AllChatsPageWidgetState extends State<AllChatsPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => AllChatsPageModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -97,7 +99,7 @@ class _AllChatsPageWidgetState extends State<AllChatsPageWidget> {
                     height: 50.0,
                     child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).secondary,
+                        FlutterFlowTheme.of(context).primary,
                       ),
                     ),
                   ),

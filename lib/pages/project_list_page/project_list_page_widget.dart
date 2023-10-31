@@ -84,6 +84,8 @@ class _ProjectListPageWidgetState extends State<ProjectListPageWidget>
           !anim.applyInitialState),
       this,
     );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override

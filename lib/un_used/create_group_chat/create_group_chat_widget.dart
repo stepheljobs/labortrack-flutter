@@ -31,6 +31,7 @@ class _CreateGroupChatWidgetState extends State<CreateGroupChatWidget> {
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -186,7 +187,7 @@ class _CreateGroupChatWidgetState extends State<CreateGroupChatWidget> {
                       height: 50.0,
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          FlutterFlowTheme.of(context).secondary,
+                          FlutterFlowTheme.of(context).primary,
                         ),
                       ),
                     ),
