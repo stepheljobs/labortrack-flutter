@@ -1,19 +1,18 @@
-import '/auth/firebase_auth/auth_util.dart';
+import '/auth/supabase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'forgot_password_model.dart';
 export 'forgot_password_model.dart';
 
 class ForgotPasswordWidget extends StatefulWidget {
-  const ForgotPasswordWidget({Key? key}) : super(key: key);
+  const ForgotPasswordWidget({super.key});
 
   @override
-  _ForgotPasswordWidgetState createState() => _ForgotPasswordWidgetState();
+  State<ForgotPasswordWidget> createState() => _ForgotPasswordWidgetState();
 }
 
 class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
@@ -26,9 +25,8 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
     super.initState();
     _model = createModel(context, () => ForgotPasswordModel());
 
-    _model.phoneNumberController ??= TextEditingController();
-    _model.phoneNumberFocusNode ??= FocusNode();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    _model.emailController ??= TextEditingController();
+    _model.emailFocusNode ??= FocusNode();
   }
 
   @override
@@ -40,15 +38,6 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return Scaffold(
@@ -107,8 +96,8 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 12.0),
               child: TextFormField(
-                controller: _model.phoneNumberController,
-                focusNode: _model.phoneNumberFocusNode,
+                controller: _model.emailController,
+                focusNode: _model.emailFocusNode,
                 obscureText: false,
                 decoration: InputDecoration(
                   labelText: 'Enter your email',
@@ -148,15 +137,14 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                       EdgeInsetsDirectional.fromSTEB(20.0, 24.0, 20.0, 24.0),
                 ),
                 style: FlutterFlowTheme.of(context).bodyMedium,
-                validator:
-                    _model.phoneNumberControllerValidator.asValidator(context),
+                validator: _model.emailControllerValidator.asValidator(context),
               ),
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
               child: FFButtonWidget(
                 onPressed: () async {
-                  if (_model.phoneNumberController.text.isEmpty) {
+                  if (_model.emailController.text.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
@@ -167,9 +155,12 @@ class _ForgotPasswordWidgetState extends State<ForgotPasswordWidget> {
                     return;
                   }
                   await authManager.resetPassword(
-                    email: _model.phoneNumberController.text,
+                    email: _model.emailController.text,
                     context: context,
                   );
+                  setState(() {
+                    _model.emailController?.clear();
+                  });
                 },
                 text: 'Send Reset Link',
                 options: FFButtonOptions(

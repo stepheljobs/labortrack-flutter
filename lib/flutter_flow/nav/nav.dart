@@ -6,6 +6,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
 
+import '/backend/supabase/supabase.dart';
 import '/auth/base_auth_user_provider.dart';
 
 import '/index.dart';
@@ -108,11 +109,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ForgotPasswordWidget(),
         ),
         FFRoute(
-          name: 'createStory',
-          path: '/createStory',
-          builder: (context, params) => CreateStoryWidget(),
-        ),
-        FFRoute(
           name: 'editSettings',
           path: '/editSettings',
           builder: (context, params) => params.isEmpty
@@ -125,48 +121,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => EditUserProfileWidget(),
         ),
         FFRoute(
-          name: 'changePassword',
-          path: '/changePassword',
-          builder: (context, params) => ChangePasswordWidget(),
-        ),
-        FFRoute(
-          name: 'chatPage',
-          path: '/chatPage',
-          asyncParams: {
-            'chatUser': getDoc(['users'], UsersRecord.fromSnapshot),
-          },
-          builder: (context, params) => ChatPageWidget(
-            chatUser: params.getParam('chatUser', ParamType.Document),
-            chatRef: params.getParam(
-                'chatRef', ParamType.DocumentReference, false, ['chats']),
-          ),
-        ),
-        FFRoute(
-          name: 'allChatsPage',
-          path: '/allChatsPage',
-          builder: (context, params) => AllChatsPageWidget(),
-        ),
-        FFRoute(
-          name: 'addChatUsers',
-          path: '/addChatUsers',
-          asyncParams: {
-            'chat': getDoc(['chats'], ChatsRecord.fromSnapshot),
-          },
-          builder: (context, params) => AddChatUsersWidget(
-            chat: params.getParam('chat', ParamType.Document),
-          ),
-        ),
-        FFRoute(
-          name: 'createGroupChat',
-          path: '/createGroupChat',
-          builder: (context, params) => CreateGroupChatWidget(),
-        ),
-        FFRoute(
-          name: 'mainPage',
-          path: '/mainPage',
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'mainPage')
-              : MainPageWidget(),
+          name: 'main',
+          path: '/main',
+          builder: (context, params) =>
+              params.isEmpty ? NavBarPage(initialPage: 'main') : MainWidget(),
         ),
         FFRoute(
           name: 'postPicture',
@@ -176,12 +134,33 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : PostPictureWidget(),
         ),
         FFRoute(
-          name: 'projectListPage',
-          path: '/projectListPage',
-          builder: (context, params) => ProjectListPageWidget(),
+          name: 'projectList',
+          path: '/projectList',
+          builder: (context, params) => ProjectListWidget(),
+        ),
+        FFRoute(
+          name: 'punchlistForm',
+          path: '/punchlistForm',
+          builder: (context, params) => PunchlistFormWidget(),
+        ),
+        FFRoute(
+          name: 'punchList',
+          path: '/punchList',
+          builder: (context, params) => PunchListWidget(),
+        ),
+        FFRoute(
+          name: 'chat',
+          path: '/chat',
+          builder: (context, params) => ChatWidget(),
+        ),
+        FFRoute(
+          name: 'chatRoom',
+          path: '/chatRoom',
+          builder: (context, params) => ChatRoomWidget(
+            projectName: params.getParam('projectName', ParamType.String),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
-      observers: [routeObserver],
     );
 
 extension NavParamExtensions on Map<String, String?> {
@@ -351,6 +330,7 @@ class FFRoute {
           return null;
         },
         pageBuilder: (context, state) {
+          fixStatusBarOniOS16AndBelow(context);
           final ffParams = FFParameters(state, asyncParams);
           final page = ffParams.hasFutures
               ? FutureBuilder(
@@ -363,9 +343,8 @@ class FFRoute {
                   color: Colors.transparent,
                   child: Center(
                     child: Image.asset(
-                      'assets/images/logo-android.png',
-                      width: MediaQuery.sizeOf(context).width * 3.0,
-                      height: 300.0,
+                      'assets/images/logo.png',
+                      width: MediaQuery.sizeOf(context).width * 0.5,
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -378,13 +357,20 @@ class FFRoute {
                   key: state.pageKey,
                   child: child,
                   transitionDuration: transitionInfo.duration,
-                  transitionsBuilder: PageTransition(
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          PageTransition(
                     type: transitionInfo.transitionType,
                     duration: transitionInfo.duration,
                     reverseDuration: transitionInfo.duration,
                     alignment: transitionInfo.alignment,
                     child: child,
-                  ).transitionsBuilder,
+                  ).buildTransitions(
+                    context,
+                    animation,
+                    secondaryAnimation,
+                    child,
+                  ),
                 )
               : MaterialPage(key: state.pageKey, child: child);
         },

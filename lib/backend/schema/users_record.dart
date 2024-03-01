@@ -56,6 +56,11 @@ class UsersRecord extends FirestoreRecord {
   String get forwardEmail => _forwardEmail ?? '';
   bool hasForwardEmail() => _forwardEmail != null;
 
+  // "isWeb" field.
+  bool? _isWeb;
+  bool get isWeb => _isWeb ?? false;
+  bool hasIsWeb() => _isWeb != null;
+
   void _initializeFields() {
     _displayName = snapshotData['display_name'] as String?;
     _email = snapshotData['email'] as String?;
@@ -65,6 +70,7 @@ class UsersRecord extends FirestoreRecord {
     _phoneNumber = snapshotData['phone_number'] as String?;
     _companyId = snapshotData['company_id'] as String?;
     _forwardEmail = snapshotData['forwardEmail'] as String?;
+    _isWeb = snapshotData['isWeb'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -109,6 +115,7 @@ Map<String, dynamic> createUsersRecordData({
   String? phoneNumber,
   String? companyId,
   String? forwardEmail,
+  bool? isWeb,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -120,6 +127,7 @@ Map<String, dynamic> createUsersRecordData({
       'phone_number': phoneNumber,
       'company_id': companyId,
       'forwardEmail': forwardEmail,
+      'isWeb': isWeb,
     }.withoutNulls,
   );
 
@@ -138,7 +146,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.uid == e2?.uid &&
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.companyId == e2?.companyId &&
-        e1?.forwardEmail == e2?.forwardEmail;
+        e1?.forwardEmail == e2?.forwardEmail &&
+        e1?.isWeb == e2?.isWeb;
   }
 
   @override
@@ -150,7 +159,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.uid,
         e?.phoneNumber,
         e?.companyId,
-        e?.forwardEmail
+        e?.forwardEmail,
+        e?.isWeb
       ]);
 
   @override

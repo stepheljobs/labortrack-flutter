@@ -1,15 +1,11 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
-import '/backend/firebase_storage/storage.dart';
+import '/auth/supabase_auth/auth_util.dart';
+import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
-import '/custom_code/actions/index.dart' as actions;
 import 'create_your_profile_widget.dart' show CreateYourProfileWidget;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
@@ -17,10 +13,9 @@ import 'package:provider/provider.dart';
 class CreateYourProfileModel extends FlutterFlowModel<CreateYourProfileWidget> {
   ///  State fields for stateful widgets in this page.
 
-  bool isDataUploading = false;
-  FFUploadedFile uploadedLocalFile =
+  bool isDataUploading1 = false;
+  FFUploadedFile uploadedLocalFile1 =
       FFUploadedFile(bytes: Uint8List.fromList([]));
-  String uploadedFileUrl = '';
 
   // State field(s) for yourName widget.
   FocusNode? yourNameFocusNode;
@@ -35,13 +30,20 @@ class CreateYourProfileModel extends FlutterFlowModel<CreateYourProfileWidget> {
   FocusNode? companyCodeFocusNode;
   TextEditingController? companyCodeController;
   String? Function(BuildContext, String?)? companyCodeControllerValidator;
-  // Stores action output result for [Custom Action - generateCode] action in Text widget.
-  String? generatedCode;
+  bool isDataUploading2 = false;
+  FFUploadedFile uploadedLocalFile2 =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+  String uploadedFileUrl2 = '';
+
+  // Stores action output result for [Backend Call - Insert Row] action in Button widget.
+  UsersRow? createAccountOutput;
 
   /// Initialization and disposal methods.
 
+  @override
   void initState(BuildContext context) {}
 
+  @override
   void dispose() {
     yourNameFocusNode?.dispose();
     yourNameController?.dispose();

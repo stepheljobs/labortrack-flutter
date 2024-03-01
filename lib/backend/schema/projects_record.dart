@@ -21,11 +21,6 @@ class ProjectsRecord extends FirestoreRecord {
   String get companyId => _companyId ?? '';
   bool hasCompanyId() => _companyId != null;
 
-  // "id" field.
-  DocumentReference? _id;
-  DocumentReference? get id => _id;
-  bool hasId() => _id != null;
-
   // "location" field.
   String? _location;
   String get location => _location ?? '';
@@ -38,7 +33,6 @@ class ProjectsRecord extends FirestoreRecord {
 
   void _initializeFields() {
     _companyId = snapshotData['company_id'] as String?;
-    _id = snapshotData['id'] as DocumentReference?;
     _location = snapshotData['location'] as String?;
     _name = snapshotData['name'] as String?;
   }
@@ -79,14 +73,12 @@ class ProjectsRecord extends FirestoreRecord {
 
 Map<String, dynamic> createProjectsRecordData({
   String? companyId,
-  DocumentReference? id,
   String? location,
   String? name,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'company_id': companyId,
-      'id': id,
       'location': location,
       'name': name,
     }.withoutNulls,
@@ -101,14 +93,13 @@ class ProjectsRecordDocumentEquality implements Equality<ProjectsRecord> {
   @override
   bool equals(ProjectsRecord? e1, ProjectsRecord? e2) {
     return e1?.companyId == e2?.companyId &&
-        e1?.id == e2?.id &&
         e1?.location == e2?.location &&
         e1?.name == e2?.name;
   }
 
   @override
   int hash(ProjectsRecord? e) =>
-      const ListEquality().hash([e?.companyId, e?.id, e?.location, e?.name]);
+      const ListEquality().hash([e?.companyId, e?.location, e?.name]);
 
   @override
   bool isValidKey(Object? o) => o is ProjectsRecord;

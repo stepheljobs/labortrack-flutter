@@ -1,17 +1,16 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'empty_list_model.dart';
 export 'empty_list_model.dart';
 
 class EmptyListWidget extends StatefulWidget {
-  const EmptyListWidget({Key? key}) : super(key: key);
+  const EmptyListWidget({super.key});
 
   @override
-  _EmptyListWidgetState createState() => _EmptyListWidgetState();
+  State<EmptyListWidget> createState() => _EmptyListWidgetState();
 }
 
 class _EmptyListWidgetState extends State<EmptyListWidget> {
@@ -27,8 +26,6 @@ class _EmptyListWidgetState extends State<EmptyListWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EmptyListModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -58,7 +55,7 @@ class _EmptyListWidgetState extends State<EmptyListWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Seems you don’t have any post\nAdd your first attendance post',
+                'It looks like you don\'t have any posts\nfor your selected project today.',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).headlineSmall.override(
                       fontFamily: 'Outfit',

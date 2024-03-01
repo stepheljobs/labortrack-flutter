@@ -16,11 +16,6 @@ class PostRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "ImgPath" field.
-  String? _imgPath;
-  String get imgPath => _imgPath ?? '';
-  bool hasImgPath() => _imgPath != null;
-
   // "project_name" field.
   String? _projectName;
   String get projectName => _projectName ?? '';
@@ -56,13 +51,22 @@ class PostRecord extends FirestoreRecord {
   String get date => _date ?? '';
   bool hasDate() => _date != null;
 
+  // "ImgPath" field.
+  String? _imgPath;
+  String get imgPath => _imgPath ?? '';
+  bool hasImgPath() => _imgPath != null;
+
   // "created_time" field.
   DateTime? _createdTime;
   DateTime? get createdTime => _createdTime;
   bool hasCreatedTime() => _createdTime != null;
 
+  // "note_employee" field.
+  List<String>? _noteEmployee;
+  List<String> get noteEmployee => _noteEmployee ?? const [];
+  bool hasNoteEmployee() => _noteEmployee != null;
+
   void _initializeFields() {
-    _imgPath = snapshotData['ImgPath'] as String?;
     _projectName = snapshotData['project_name'] as String?;
     _postedBy = snapshotData['posted_by'] as String?;
     _companyId = snapshotData['company_id'] as String?;
@@ -70,7 +74,9 @@ class PostRecord extends FirestoreRecord {
     _location = snapshotData['location'] as String?;
     _notes = snapshotData['notes'] as String?;
     _date = snapshotData['date'] as String?;
+    _imgPath = snapshotData['ImgPath'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
+    _noteEmployee = getDataList(snapshotData['note_employee']);
   }
 
   static CollectionReference get collection =>
@@ -107,7 +113,6 @@ class PostRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createPostRecordData({
-  String? imgPath,
   String? projectName,
   String? postedBy,
   String? companyId,
@@ -115,11 +120,11 @@ Map<String, dynamic> createPostRecordData({
   String? location,
   String? notes,
   String? date,
+  String? imgPath,
   DateTime? createdTime,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'ImgPath': imgPath,
       'project_name': projectName,
       'posted_by': postedBy,
       'company_id': companyId,
@@ -127,6 +132,7 @@ Map<String, dynamic> createPostRecordData({
       'location': location,
       'notes': notes,
       'date': date,
+      'ImgPath': imgPath,
       'created_time': createdTime,
     }.withoutNulls,
   );
@@ -139,20 +145,21 @@ class PostRecordDocumentEquality implements Equality<PostRecord> {
 
   @override
   bool equals(PostRecord? e1, PostRecord? e2) {
-    return e1?.imgPath == e2?.imgPath &&
-        e1?.projectName == e2?.projectName &&
+    const listEquality = ListEquality();
+    return e1?.projectName == e2?.projectName &&
         e1?.postedBy == e2?.postedBy &&
         e1?.companyId == e2?.companyId &&
         e1?.status == e2?.status &&
         e1?.location == e2?.location &&
         e1?.notes == e2?.notes &&
         e1?.date == e2?.date &&
-        e1?.createdTime == e2?.createdTime;
+        e1?.imgPath == e2?.imgPath &&
+        e1?.createdTime == e2?.createdTime &&
+        listEquality.equals(e1?.noteEmployee, e2?.noteEmployee);
   }
 
   @override
   int hash(PostRecord? e) => const ListEquality().hash([
-        e?.imgPath,
         e?.projectName,
         e?.postedBy,
         e?.companyId,
@@ -160,7 +167,9 @@ class PostRecordDocumentEquality implements Equality<PostRecord> {
         e?.location,
         e?.notes,
         e?.date,
-        e?.createdTime
+        e?.imgPath,
+        e?.createdTime,
+        e?.noteEmployee
       ]);
 
   @override

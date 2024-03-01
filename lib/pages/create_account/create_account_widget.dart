@@ -1,21 +1,19 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/backend.dart';
+import '/auth/supabase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'create_account_model.dart';
 export 'create_account_model.dart';
 
 class CreateAccountWidget extends StatefulWidget {
-  const CreateAccountWidget({Key? key}) : super(key: key);
+  const CreateAccountWidget({super.key});
 
   @override
-  _CreateAccountWidgetState createState() => _CreateAccountWidgetState();
+  State<CreateAccountWidget> createState() => _CreateAccountWidgetState();
 }
 
 class _CreateAccountWidgetState extends State<CreateAccountWidget> {
@@ -30,11 +28,12 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
 
     _model.emailController ??= TextEditingController();
     _model.emailFocusNode ??= FocusNode();
+
     _model.passwordController ??= TextEditingController();
     _model.passwordFocusNode ??= FocusNode();
+
     _model.confirmPasswordController ??= TextEditingController();
     _model.confirmPasswordFocusNode ??= FocusNode();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -46,15 +45,6 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (isiOS) {
-      SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
-          statusBarBrightness: Theme.of(context).brightness,
-          systemStatusBarContrastEnforced: true,
-        ),
-      );
-    }
-
     context.watch<FFAppState>();
 
     return Scaffold(
@@ -81,7 +71,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Align(
-                  alignment: AlignmentDirectional(0.00, 0.00),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
@@ -109,7 +99,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                   end: AlignmentDirectional(0, 1.0),
                 ),
               ),
-              alignment: AlignmentDirectional(0.00, 0.80),
+              alignment: AlignmentDirectional(0.0, 0.8),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 44.0),
                 child: Column(
@@ -416,20 +406,6 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 if (user == null) {
                                   return;
                                 }
-
-                                await UsersRecord.collection
-                                    .doc(user.uid)
-                                    .update({
-                                  ...createUsersRecordData(
-                                    email: _model.emailController.text,
-                                  ),
-                                  ...mapToFirestore(
-                                    {
-                                      'created_time':
-                                          FieldValue.serverTimestamp(),
-                                    },
-                                  ),
-                                });
 
                                 context.pushNamedAuth(
                                     'createYourProfile', context.mounted);

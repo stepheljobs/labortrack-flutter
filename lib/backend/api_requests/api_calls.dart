@@ -16,7 +16,7 @@ class GetLocationAPICall {
     return ApiManager.instance.makeApiCall(
       callName: 'getLocationAPI',
       apiUrl:
-          'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyBHzHt6VGnvTLDxF-sXKIu2vO69Sq7wYMk',
+          'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyBdgtkFEFeHIqfOA15dPwyz2X-GMgYqy2U',
       callType: ApiCallType.GET,
       headers: {
         'Content-Type': 'application/json',
@@ -26,14 +26,44 @@ class GetLocationAPICall {
       encodeBodyUtf8: false,
       decodeUtf8: false,
       cache: false,
+      alwaysAllowBody: false,
     );
   }
 
-  static dynamic currentAddress(dynamic response) => getJsonField(
+  static List<String>? currentAddress(dynamic response) => (getJsonField(
         response,
         r'''$.results[:].formatted_address''',
         true,
-      );
+      ) as List?)
+          ?.withoutNulls
+          .map((x) => castToType<String>(x))
+          .withoutNulls
+          .toList();
+}
+
+class GetUserDataCall {
+  static Future<ApiCallResponse> call({
+    String? id = '',
+    String? email = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getUserData',
+      apiUrl: 'https://iztwpzhalxhzwmkuiqae.supabase.co/rest/v1/users',
+      callType: ApiCallType.GET,
+      headers: {
+        'apikey':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml6dHdwemhhbHhoendta3VpcWFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQzNDk5ODgsImV4cCI6MjAxOTkyNTk4OH0.UvOS-q-jPsTcaZCxqEmjGAFP3dITckzO4VznBWhhv6M',
+      },
+      params: {
+        'email': email,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      alwaysAllowBody: false,
+    );
+  }
 }
 
 class ApiPagingParams {

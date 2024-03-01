@@ -1,17 +1,16 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'empty_project_list_model.dart';
 export 'empty_project_list_model.dart';
 
 class EmptyProjectListWidget extends StatefulWidget {
-  const EmptyProjectListWidget({Key? key}) : super(key: key);
+  const EmptyProjectListWidget({super.key});
 
   @override
-  _EmptyProjectListWidgetState createState() => _EmptyProjectListWidgetState();
+  State<EmptyProjectListWidget> createState() => _EmptyProjectListWidgetState();
 }
 
 class _EmptyProjectListWidgetState extends State<EmptyProjectListWidget> {
@@ -27,8 +26,6 @@ class _EmptyProjectListWidgetState extends State<EmptyProjectListWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => EmptyProjectListModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
